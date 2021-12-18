@@ -14,11 +14,16 @@ class BaseModel(models.Model):
 class Post(BaseModel):
     title = models.CharField(max_length=300)
     link = models.URLField()
-    upvote_amount = models.PositiveIntegerField()
+    upvote_amount = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+    )
     author = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
-        related_name='user_posts'
+        related_name='user_posts',
+        null=True,
+        blank=True,
     )
 
     class Meta:
@@ -28,6 +33,30 @@ class Post(BaseModel):
 
     def __str__(self):
         return f'{self.title}'
+
+
+class Comment(BaseModel):
+    content = models.TextField(max_length=3000)
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='user_comments',
+        null=True,
+        blank=True,
+    )
+    post = models.ForeignKey(
+        'Post',
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
+
+    class Meta:
+        db_table = 'comments'
+        verbose_name = _('Comment')
+        verbose_name_plural = _('Comments')
+
+    def __str__(self):
+        return f'{self.content}'
 
 
 

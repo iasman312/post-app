@@ -1,6 +1,8 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from posts.models import Post
 from posts.serializers import (
@@ -25,3 +27,11 @@ class PostViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class PostUpvoteView(APIView):
+    def patch(self, pk, request, *args, **kwargs):
+        post = get_object_or_404(Post, pk=pk)
+        post.upvote_amount += 1
+        post.save()
+        return Response(status=status.HTTP_200_OK)
