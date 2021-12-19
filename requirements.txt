@@ -3,3 +3,7 @@ djangorestframework==3.13.1
 django-environ==0.8.1
 Django==4.0
 psycopg2-binary==2.9.2
+celery==4.4.7
+redis
+django-celery-beat
+django-celery-results

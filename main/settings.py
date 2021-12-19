@@ -57,8 +57,9 @@ INSTALLED_APPS = [
     'posts.apps.PostsConfig',
     'accounts.apps.AccountsConfig',
     # Lib apps
+    'django_celery_beat',
+    'django_celery_results',
     'rest_framework',
-
 ]
 
 MIDDLEWARE = [
@@ -161,4 +162,13 @@ SIMPLE_JWT = {
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
 }
+
+# CELERY STUFF
+BASE_REDIS_URL = env('REDIS_URL', default='redis://localhost:6379')
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = env('UTC', default='Asia/Bishkek')
+
 
