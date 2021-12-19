@@ -45,8 +45,3 @@ class CommentCreateSerializer(serializers.ModelSerializer):
         comment.author = self.context.user
         comment.save()
         return comment
-
-
-
-
-

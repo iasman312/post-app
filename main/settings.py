@@ -9,16 +9,15 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import os
 from datetime import timedelta
 from pathlib import Path
-import os
-import environ
-import dj_database_url
 
+import dj_database_url
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 env = environ.Env(
     DEBUG=(bool, False)
@@ -26,7 +25,6 @@ env = environ.Env(
 
 if os.path.exists(BASE_DIR / '.env'):
     environ.Env.read_env(env_file=str(BASE_DIR / '.env'))
-
 
 APP_ENV = env('APP_ENV', default='development')
 
@@ -36,14 +34,10 @@ if APP_ENV == 'development':
 else:
     DEBUG = False
 
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
-
+SECRET_KEY = 'django-insecure-_a1biedy2e!1sj3#(7@m4xfy=%-nkyk*xg0c0kt3$94qoj1s6d'
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-
-
 
 # Application definition
 
@@ -93,7 +87,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'main.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -130,7 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -141,7 +133,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -175,5 +166,3 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = env('UTC', default='Asia/Bishkek')
-
-

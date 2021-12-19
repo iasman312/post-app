@@ -49,8 +49,3 @@ class PostCreateSerializer(serializers.ModelSerializer):
         post.author = self.context.user
         post.save()
         return post
-
-
-
-
-
