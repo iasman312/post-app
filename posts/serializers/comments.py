@@ -1,9 +1,20 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from posts.models import Post, Comment
+from posts.models import Comment
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = (
+            'username',
+        )
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    author = UserSerializer()
+
     class Meta:
         model = Comment
         fields = (
@@ -30,10 +41,10 @@ class CommentCreateSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        post = Post(**validated_data)
-        post.author = self.context.user
-        post.save()
-        return post
+        comment = Comment(**validated_data)
+        comment.author = self.context.user
+        comment.save()
+        return comment
 
 
 

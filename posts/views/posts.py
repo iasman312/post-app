@@ -14,7 +14,7 @@ from posts.serializers import (
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get_serializer_class(self):
         if self.action == 'create':
@@ -30,8 +30,13 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 class PostUpvoteView(APIView):
-    def patch(self, pk, request, *args, **kwargs):
+    permission_classes = (IsAuthenticated,)
+
+    def patch(self, request, pk, *args, **kwargs):
         post = get_object_or_404(Post, pk=pk)
-        post.upvote_amount += 1
+        if post.upvote_amount is None:
+            post.upvote_amount = 1
+        else:
+            post.upvote_amount += 1
         post.save()
         return Response(status=status.HTTP_200_OK)

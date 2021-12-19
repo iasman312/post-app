@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # custom apps
     'posts.apps.PostsConfig',
+    'accounts.apps.AccountsConfig',
     # Lib apps
     'rest_framework',
 
